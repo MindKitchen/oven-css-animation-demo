@@ -1,0 +1,297 @@
+$iconSpritePath: "../images/glyphicons-halflings.png";
+$iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
+
+//@import 'sass-bootstrap/lib/bootstrap';
+
+@mixin placeholder {
+  &.placeholder { @content }
+  &:-ms-placeholder { @content }
+  &:-moz-placeholder { @content }
+  &::-moz-placeholder { @content }
+  &::-webkit-input-placeholder { @content }
+}
+
+$font-color: #eb6;
+$form-color: #ed2;
+$form-color: #26a;
+$sign-color: #642;
+$corner-radius: 8px;
+
+@mixin font-styling {
+  color: $font-color;
+  font: 26px/26px Tahoma, sans-serif;
+  font-weight: bold;
+  text-shadow: 1px -1px 2px rgba(0, 0, 0, 0.85), -1px 1px 1px rgba(255, 255, 255, 0.30);
+}
+
+@mixin sign-styling {
+  border: 1px solid darken( $sign-color, 10% );
+  border-top-color: lighten( $sign-color, 10% );
+  border-right-color: lighten( $sign-color, 05% );
+  border-radius: $corner-radius;
+  box-shadow: 0px 0px 6px 3px rgba(0, 50, 0, 0.50), -1px 1px 2px 0px rgba(0, 0, 0, 0.80);
+  padding: 10px 15px;
+
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+
+  z-index: 1;
+}
+
+.sign-background {
+  background: $sign-color;
+  background-image: inline-image('wood.jpg');
+}
+
+html {
+  background: #142 inline-image('jungle-scene-background.jpg') no-repeat top center fixed;
+  background-size: 100% 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  margin: auto;
+  max-width: 360px;
+  padding: 0px;
+}
+
+h1 {
+  @include font-styling;
+  @include sign-styling;
+  @extend .sign-background;
+  font-size: 32px;
+  line-height: 40px;
+  text-align: center;
+  margin: 20px 0px;
+
+  animation: swing 1.5s ease forwards, fade-in 1s ease forwards;
+}
+
+input {
+  background: lighten( $form-color, 0% );
+  box-shadow: 0px 0px 5px 5px rgba(000, 100, 000, 0.75);
+  color: lighten( adjust-hue( $form-color, 180 ), 30% );
+  border: 1px solid lighten( $form-color, 10% );
+  font: bold 15px sans-serif;
+  margin: 0px;
+}
+
+input[type="number"]:focus {
+  outline: none;
+}
+
+input[type="number"] {
+  width: 259px;
+  padding: 10px;
+
+  border-right: none;
+  border-top-left-radius: $corner-radius;
+  border-bottom-left-radius: $corner-radius;
+  border-top-color: lighten( $form-color, 10% );
+
+  @include placeholder {
+    color: desaturate( lighten( $form-color, 30% ), 50% );
+  }
+}
+
+input[type="submit"] {
+  width: 79px;
+  padding: 10px 15px;
+
+  border-left: none;
+  border-top-right-radius: $corner-radius;
+  border-bottom-right-radius: $corner-radius;
+  border-right-color: lighten( $form-color, 05% );
+}
+
+#guesses {
+  margin: 20px 0px 0px;
+  padding: 0px;
+  perspective: 1000px;
+  perspective-origin: 50% 0%;
+}
+
+#guesses li {
+  @include sign-styling;
+  @extend .sign-background;
+  list-style: none;
+  margin: 10px 0px 0px;
+  position: relative; // So z-indexes work
+}
+
+#guesses li span {
+  @include font-styling;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: rotateX( -89deg ) rotateZ( -0.75deg );
+  }
+  10% {
+    transform: rotateX( 55deg );
+  }
+  20% {
+    transform: rotateX( -34deg ) rotateZ( 0.50deg );
+  }
+  35% {
+    transform: rotateX( 21deg );
+  }
+  45% {
+    transform: rotateX( -13deg ) rotateZ( -0.35deg );
+  }
+  55% {
+    transform: rotateX( 8deg );
+  }
+  70% {
+    transform: rotateX( -5deg ) rotateZ( 0.20deg );
+  }
+  85% {
+    transform: rotateX( 3deg );
+  }
+  100% {
+    transform: rotateX( 0deg ) rotateY( 0deg ) rotateZ( 0deg );
+  }
+}
+
+$vine-stalk: #eb6;
+
+@mixin vine {
+  position: relative;
+  bottom: 93px;
+  z-index: -1;
+
+  .stalk { @include stalk; }
+  .leaf1 { @include leaf1; }
+}
+
+@mixin stalk {
+  background: $vine-stalk;
+  position: absolute;
+  width: 5px;
+  height: 55px;
+}
+
+@mixin leaf1 {
+
+}
+
+.vine-left {
+  @include vine;
+
+  left: 20px;
+
+}
+.vine-right {
+  @include vine;
+
+  left: 305px;
+}
+
+#guesses li:first-child div { display: none; }
+
+#guesses li:nth-child( 3n+1 ) { animation: slow-swing-1 1.5s ease forwards; }
+#guesses li:nth-child( 3n+2 ) { animation: slow-swing-2 1.5s ease forwards; }
+#guesses li:nth-child( 3n+3 ) { animation: slow-swing-3 1.5s ease forwards; }
+
+#guesses li:first-child { animation: swing 1.5s ease forwards, rock 1.5s ease forwards, fade-in 0.10s ease forwards; }
+
+@keyframes slow-swing-1 {
+  0% {
+    transform: rotateX( 0deg ) rotateY( 0deg ) rotateZ( 0deg );
+  }
+  10% {
+    transform: rotateX( -10deg ) rotateY( 1deg ) rotateZ( 0.25deg );
+  }
+  20% {
+    transform: rotateX( 15deg ) rotateY( 0deg ) rotateZ( -0.50deg );
+  }
+  35% {
+    transform: rotateX( 10deg ) rotateY( -1.5deg ) rotateZ( 0.90deg );
+  }
+  45% {
+    transform: rotateX( -03deg ) rotateY( 0.25deg ) rotateZ( -0.25deg );
+  }
+  55% {
+    transform: rotateX( 09deg ) rotateY( 0deg ) rotateZ( 0.70deg );
+  }
+  70% {
+    transform: rotateX( -05deg ) rotateY( 0.25deg ) rotateZ( -0.05deg );
+  }
+  85% {
+    transform: rotateX( 05deg ) rotateY( -0.50deg ) rotateZ( 0.10deg );
+  }
+  100% {
+    transform: rotateX( 0deg ) rotateY( 0deg ) rotateZ( 0deg );
+  }
+}
+
+@keyframes slow-swing-2 {
+  0% {
+    transform: rotateX( 0deg ) rotateY( 0deg ) rotateZ( 0deg );
+  }
+  10% {
+    transform: rotateX( -20deg ) rotateY( 0deg ) rotateZ( -0.15deg );
+  }
+  20% {
+    transform: rotateX( 07deg ) rotateY( -3deg ) rotateZ( 0.20deg );
+  }
+  35% {
+    transform: rotateX( -02deg ) rotateY( 0deg ) rotateZ( -0.70deg );
+  }
+  45% {
+    transform: rotateX( 00deg ) rotateY( 02deg ) rotateZ( 0.20deg );
+  }
+  55% {
+    transform: rotateX( -05deg ) rotateY( 0deg ) rotateZ( 0.90deg );
+  }
+  70% {
+    transform: rotateX( 09deg ) rotateY( 0deg ) rotateZ( -0.25deg );
+  }
+  85% {
+    transform: rotateX( -02deg ) rotateY( 1deg ) rotateZ( 0.15deg );
+  }
+  100% {
+    transform: rotateX( 0deg ) rotateY( 0deg ) rotateZ( 0deg );
+  }
+}
+
+@keyframes slow-swing-3 {
+  0% {
+    transform: rotateX( 0deg ) rotateY( 0deg ) rotateZ( 0deg );
+  }
+  10% {
+    transform: rotateX( -10deg ) rotateY( 0deg ) rotateZ( 0.75deg );
+  }
+  20% {
+    transform: rotateX( 20deg ) rotateY( 0deg ) rotateZ( -0.90deg );
+  }
+  35% {
+    transform: rotateX( -12deg ) rotateY( 0deg ) rotateZ( 1deg );
+  }
+  45% {
+    transform: rotateX( 12deg ) rotateY( 0deg ) rotateZ( -0.50deg );
+  }
+  55% {
+    transform: rotateX( -07deg ) rotateY( 0deg ) rotateZ( 0.30deg );
+  }
+  70% {
+    transform: rotateX( 05deg ) rotateY( 0deg ) rotateZ( -0.15deg );
+  }
+  85% {
+    transform: rotateX( -03deg ) rotateY( 0deg ) rotateZ( 0.07deg );
+  }
+  100% {
+    transform: rotateX( 0deg ) rotateY( 0deg ) rotateZ( 0deg );
+  }
+}
