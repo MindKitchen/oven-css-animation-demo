@@ -14,6 +14,10 @@ define(['jquery'], function ( $ ) {
     n = parseInt( n, 10 );
     if( n === randNum ) {
       return 'You got it!';
+    } else if( n > 100 ) {
+      return n + ' is over 100!';
+    } else if( n < 1 ) {
+      return n + ' is less than 1!';
     } else if( n < randNum ) {
       return n + ' is too low!';
     } else if( n > randNum ) {
